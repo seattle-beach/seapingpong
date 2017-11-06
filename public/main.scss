@@ -1,0 +1,24 @@
+body {
+  background-color: black;
+  color: white;
+}
+#game-container {
+  width: 100%;
+  display: inline-flex;
+}
+.team-container {
+  width: 50%;
+  display: inline-block;
+  position:relative;
+}
+.team-container.first {
+  text-align: right;
+}
+.team-score {
+  text-align: right;
+}
+.divider {
+  height: 200px;
+  border-left: 1px dashed white;
+  margin: 0 10px;
+}

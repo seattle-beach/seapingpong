@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seattle Ping Pong</title>
+    <script src="https://vuejs.org/js/vue.js" type="application/javascript"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <script src="/game.js" type="application/javascript"></script>
+</head>
+<body>
+    <div id="game-container">
+        <div id="team-a" class="team-container first">
+            <span v-if="serving">*</span>
+            <span class="team-score">{{ score }}</span>
+        </div>
+        <div class="divider"></div>
+        <div id="team-b" class="team-container">
+            <span class="team-score">{{ score }}</span>
+            <span v-if="serving">*</span>
+        </div>
+    </div>
+    <script type="application/javascript">
+        let pp = new PingPong();
+
+        let socket = io();
+        socket.on('button press', function(json){
+            pp.handleButtonPress(json.btn_id, json.duration);
+        });
+
+        new Vue({
+            el: '#team-a',
+            data: pp.teams[0]
+        });
+        new Vue({
+            el: '#team-b',
+            data: pp.teams[1]
+        });
+    </script>
+</body>
+</html>
