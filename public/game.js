@@ -24,6 +24,10 @@ function PingPong() {
         return Math.abs(this.teams[0].score - this.teams[1].score);
     };
 
+    this.maxScore = function() {
+        return Math.max(this.teams[0].score, this.teams[1].score);
+    };
+
     this.updateServing = function() {
         const teamAServes = (this.totalScore() & 2) == 0;
 
@@ -44,7 +48,7 @@ function PingPong() {
     this.scorePoint = function(teamIdx, numPoints) {
         this.teams[teamIdx].score += numPoints;
 
-        if ((this.totalScore() >= this.winCondition) && (this.diffScore() >= this.winDelta))
+        if ((this.maxScore() >= this.winCondition) && (this.diffScore() >= this.winDelta))
         {
             this.reset();
             return;
