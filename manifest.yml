@@ -1,0 +1,8 @@
+---
+applications:
+- name: seapingpong
+  memory: 512M
+  instances: 1
+  domain: cfapps.io
+  buildpack: nodejs_buildpack
+  command: node server.js

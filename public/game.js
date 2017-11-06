@@ -68,7 +68,7 @@ function PingPong() {
         }
 
         let points = 1;
-        if (duration > 1000) {
+        if (duration > 500) {
             points = -1;
         }
 

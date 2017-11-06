@@ -13,7 +13,7 @@ app.get('/ping', function(req, res){
     res.send('pong');
 });
 
-app.post('/', function (req, res) {
+app.post('/score', function (req, res) {
     console.log(req.body);
     io.emit('button press', req.body);
     res.json(req.body);
@@ -26,6 +26,7 @@ io.on('connection', function(socket){
     });
 });
 
-http.listen(80, function(){
-    console.log('listening on *:80');
+var port = process.env.PORT || 3000;
+http.listen(port, function(){
+    console.log('listening on *:' + port);
 });
