@@ -8,12 +8,14 @@ function PingPong() {
         score: 0,
         players: 0,
         id: 'Team A',
-        serving: false
+        serving: false,
+        winner: false
     }, {
         score: 0,
         players: 0,
         id: 'Team B',
-        serving: false
+        serving: false,
+        winner: false
     }];
 
     this.totalScore = function() {
@@ -39,9 +41,9 @@ function PingPong() {
         Array.prototype.forEach.call(this.teams, function (t, idx) {
             t.score = 0;
             t.serving = false;
+            t.winner = false;
         });
 
-        this.teams[0].serving = true;
         this.updateServing();
     };
 
@@ -50,7 +52,7 @@ function PingPong() {
 
         if ((this.maxScore() >= this.winCondition) && (this.diffScore() >= this.winDelta))
         {
-            this.reset();
+            this.teams[teamIdx].winner = true;
             return;
         }
 

@@ -11,6 +11,7 @@
 <body>
     <div id="game-container">
         <div id="team-a" class="team-container first">
+            <span v-if="winner">WINRAR</span>
             <span v-if="serving">*</span>
             <span class="team-score">{{ score }}</span>
         </div>
@@ -18,8 +19,18 @@
         <div id="team-b" class="team-container">
             <span class="team-score">{{ score }}</span>
             <span v-if="serving">*</span>
+            <span v-if="winner">WINRAR</span>
+        </div>
+        <div>
+            <ul style="list-style-type: none">
+                <li>Short button press for +1 points</li>
+                <li>Long button press for -1 points</li>
+                <li>Big red button is reset game</li>
+                <li><strong>*</strong> is serving team</li>
+            </ul>
         </div>
     </div>
+
     <script type="application/javascript">
         let pp = new PingPong();
 
