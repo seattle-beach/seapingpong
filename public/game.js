@@ -77,3 +77,6 @@ function PingPong() {
 
     this.reset();
 };
+
+// Export node module.
+module.exports = PingPong;
