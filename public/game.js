@@ -31,7 +31,12 @@ function PingPong() {
     };
 
     this.updateServing = function() {
-        const teamAServes = (this.totalScore() & 2) == 0;
+        if (this.teams[0].score >= 10 && this.teams[1].score >= 10)
+        {
+            var teamAServes = (this.totalScore() & 1) == 0;
+        } else {
+            var teamAServes = (this.totalScore() & 2) == 0;
+        }
 
         this.teams[0].serving = teamAServes;
         this.teams[1].serving = !teamAServes;
