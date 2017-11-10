@@ -98,7 +98,7 @@ describe("The PingPong app", function() {
         expect(pp.teams[1].winner).toBe(false);
     });
 
-    it("should implement duece rules", function() {
+    it("should implement deuce rules", function() {
         var pp = new PingPong();
         // 10 : 10
         pp.scorePoint(0, 10);
