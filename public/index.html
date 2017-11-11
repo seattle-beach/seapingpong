@@ -34,11 +34,6 @@
     <script type="application/javascript">
         let pp = new PingPong();
 
-        let socket = io();
-        socket.on('button press', function(json){
-            pp.handleButtonPress(json.btn_id, json.duration);
-        });
-
         new Vue({
             el: '#team-a',
             data: pp.teams[0]
@@ -46,6 +41,12 @@
         new Vue({
             el: '#team-b',
             data: pp.teams[1]
+        });
+
+        let socket = io();
+        socket.on('button press', function(ppUpdated) {
+            pp.updateTeam(0, ppUpdated.teams[0]);
+            pp.updateTeam(1, ppUpdated.teams[1]);
         });
     </script>
 </body>

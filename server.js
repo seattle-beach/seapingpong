@@ -4,6 +4,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
+var PingPong = require('./public/game');
+var pp = new PingPong();
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.get('/', function(req, res){
@@ -15,7 +18,9 @@ app.get('/ping', function(req, res){
 
 app.post('/score', function (req, res) {
     console.log(req.body);
-    io.emit('button press', req.body);
+    var json = req.body;
+    pp.handleButtonPress(json.btn_id, json.duration);
+    io.emit('button press', pp);
     res.json(req.body);
 });
 

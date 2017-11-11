@@ -18,8 +18,16 @@ function PingPong() {
         winner: false
     }];
 
+    this.updateTeam = function(idx, newTeamVal) {
+        this.teams[idx].score = newTeamVal.score;
+        this.teams[idx].players = newTeamVal.players;
+        this.teams[idx].id = newTeamVal.id;
+        this.teams[idx].serving = newTeamVal.serving;
+        this.teams[idx].winner = newTeamVal.winner;
+    };
+
     this.totalScore = function() {
-        return  this.teams[0].score + this.teams[1].score;
+        return this.teams[0].score + this.teams[1].score;
     };
 
     this.diffScore = function() {
