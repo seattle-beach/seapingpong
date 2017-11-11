@@ -46,6 +46,20 @@ describe("The PingPong app", function() {
         expect(pp.teams[1].winner).toBe(false);
     });
 
+    it("should not increase the score after a winner", function() {
+        var pp = new PingPong();
+
+        pp.scorePoint(0, pp.winCondition);
+        expect(pp.teams[0].winner).toBe(true);
+        expect(pp.teams[1].winner).toBe(false);
+
+        pp.scorePoint(0, 1);
+        expect(pp.totalScore()).toBe(pp.winCondition);
+        pp.scorePoint(1, 1);
+        expect(pp.totalScore()).toBe(pp.winCondition);
+
+    });
+
     it("should alternate who serves every 2 points", function() {
         var pp = new PingPong();
 

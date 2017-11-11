@@ -26,6 +26,10 @@ function PingPong() {
         this.teams[idx].winner = newTeamVal.winner;
     };
 
+    this.gameOver = function() {
+        return this.teams[0].winner || this.teams[1].winner;
+    }
+
     this.totalScore = function() {
         return this.teams[0].score + this.teams[1].score;
     };
@@ -61,6 +65,11 @@ function PingPong() {
     };
 
     this.scorePoint = function(teamIdx, numPoints) {
+        if (this.gameOver())
+        {
+            return;
+        }
+
         this.teams[teamIdx].score += numPoints;
 
         if ((this.maxScore() >= this.winCondition) && (this.diffScore() >= this.winDelta))
