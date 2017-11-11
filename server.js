@@ -21,7 +21,7 @@ app.post('/score', function (req, res) {
     var json = req.body;
     pp.handleButtonPress(json.btn_id, json.duration);
     io.emit('button press', pp);
-    res.json(req.body);
+    res.json(pp);
 });
 
 io.on('connection', function(socket){

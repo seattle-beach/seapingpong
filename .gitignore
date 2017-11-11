@@ -2,3 +2,4 @@ node_modules
 *.map
 package-lock.json
 *.css
+public/game.js

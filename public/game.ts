@@ -1,10 +1,11 @@
 'use strict';
 
-function PingPong() {
-    this.winCondition = 11;
-    this.winDelta = 2;
+class PingPong
+{
+    private winCondition = 11;
+    private winDelta = 2;
 
-    this.teams = [{
+    public teams = [{
         score: 0,
         players: 0,
         id: 'Team A',
@@ -18,31 +19,35 @@ function PingPong() {
         winner: false
     }];
 
-    this.updateTeam = function(idx, newTeamVal) {
+    constructor() {
+        this.reset();
+    };
+
+    public updateTeam(idx, newTeamVal) {
         this.teams[idx].score = newTeamVal.score;
         this.teams[idx].players = newTeamVal.players;
         this.teams[idx].id = newTeamVal.id;
         this.teams[idx].serving = newTeamVal.serving;
         this.teams[idx].winner = newTeamVal.winner;
-    };
+    }
 
-    this.gameOver = function() {
+    public gameOver() {
         return this.teams[0].winner || this.teams[1].winner;
     }
 
-    this.totalScore = function() {
+    public totalScore() {
         return this.teams[0].score + this.teams[1].score;
-    };
+    }
 
-    this.diffScore = function() {
+    public diffScore() {
         return Math.abs(this.teams[0].score - this.teams[1].score);
-    };
+    }
 
-    this.maxScore = function() {
+    public maxScore() {
         return Math.max(this.teams[0].score, this.teams[1].score);
-    };
+    }
 
-    this.updateServing = function() {
+    public updateServing() {
         if (this.teams[0].score >= 10 && this.teams[1].score >= 10)
         {
             var teamAServes = (this.totalScore() & 1) == 0;
@@ -52,9 +57,9 @@ function PingPong() {
 
         this.teams[0].serving = teamAServes;
         this.teams[1].serving = !teamAServes;
-    };
+    }
 
-    this.reset = function () {
+    public reset() {
         Array.prototype.forEach.call(this.teams, function (t, idx) {
             t.score = 0;
             t.serving = false;
@@ -62,9 +67,9 @@ function PingPong() {
         });
 
         this.updateServing();
-    };
+    }
 
-    this.scorePoint = function(teamIdx, numPoints) {
+    public scorePoint(teamIdx, numPoints) {
         if (this.gameOver())
         {
             return;
@@ -79,9 +84,9 @@ function PingPong() {
         }
 
         this.updateServing();
-    };
+    }
 
-    this.handleButtonPress = function(btn_id, duration) {
+    public handleButtonPress(btn_id, duration) {
         if (duration < 50) {
             return;
         }
@@ -97,10 +102,8 @@ function PingPong() {
         }
 
         this.scorePoint(btn_id == "a" ? 0 : 1, points);
-    };
-
-    this.reset();
-};
+    }
+}
 
 // Export node module.
 module.exports = PingPong;
