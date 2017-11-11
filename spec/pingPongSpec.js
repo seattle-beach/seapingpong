@@ -156,4 +156,65 @@ describe("The PingPong app", function() {
         expect(pp.teams[0].winner).toBe(true);
         expect(pp.teams[1].winner).toBe(false);
     });
+
+    it("supports scoring history", function() {
+        var pp = new PingPong.Game();
+        // 3 : 0
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+
+        // 3 : 1
+        pp.scorePoint(1, 1);
+
+        // 6 : 1
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+
+        // 6 : 4
+        pp.scorePoint(1, 1);
+        pp.scorePoint(1, 1);
+        pp.scorePoint(1, 1);
+
+        // 9 : 4
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+
+        // 9 : 7
+        pp.scorePoint(1, 1);
+        pp.scorePoint(1, 1);
+        pp.scorePoint(1, 1);
+
+        // 11 : 7
+        pp.scorePoint(0, 1);
+        pp.scorePoint(0, 1);
+
+        expect(pp.totalScore()).toBe(18);
+        expect(pp.scores.length).toBe(18);
+        var expectedScores = [0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0];
+        for(var i = 0; i < 18; i++) {
+            expect(pp.scores[i]).toBe(expectedScores[i]);
+        }
+    });
+
+    it("supports scoring history removal", function() {
+        var pp = new PingPong.Game();
+        pp.scorePoint(0, 5);
+        pp.scorePoint(1, 2);
+        pp.scorePoint(0, 5);
+        pp.scorePoint(1, 2);
+        pp.scorePoint(1, -2);
+        expect(pp.gameOver()).toBe(false);
+        pp.scorePoint(0, 1);
+        expect(pp.gameOver()).toBe(true);
+
+        expect(pp.totalScore()).toBe(13);
+        expect(pp.scores.length).toBe(13);
+        var expectedScores = [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
+        for(var i = 0; i < 13; i++) {
+            expect(pp.scores[i]).toBe(expectedScores[i]);
+        }
+    });
 });

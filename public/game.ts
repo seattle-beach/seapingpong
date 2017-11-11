@@ -17,6 +17,7 @@ export module PingPong {
     export class Game {
         private winCondition: int = 11;
         private winDelta: int = 2;
+        public scores: int[] = [];
 
         public teams: Team[] = [
             new Team('Team A'),
@@ -69,6 +70,7 @@ export module PingPong {
                 t.winner = false;
             });
 
+            this.scores = [];
             this.updateServing();
         }
 
@@ -77,7 +79,22 @@ export module PingPong {
                 return;
             }
 
-            this.teams[teamIdx].score += numPoints;
+            if (numPoints > 0) {
+                for (var i = 0; i < numPoints; i++) {
+                    this.teams[teamIdx].score += 1;
+                    this.scores.push(teamIdx);
+                }
+            } else {
+                for(var i = this.scores.length, p = 0; i >= 0 && p < Math.abs(numPoints); i--){
+                    if (this.scores[i] == teamIdx) {
+                        this.teams[teamIdx].score -= 1;
+                        delete this.scores[i];
+                        p++;
+                    }
+                }
+
+                this.scores = this.scores.filter(i => i != null);
+            }
 
             if ((this.maxScore() >= this.winCondition) && (this.diffScore() >= this.winDelta)) {
                 this.teams[teamIdx].winner = true;
