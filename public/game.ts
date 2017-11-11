@@ -1,107 +1,109 @@
 'use strict';
 
-class PingPong
-{
-    private winCondition = 11;
-    private winDelta = 2;
+export module PingPong {
 
-    public teams = [{
-        score: 0,
-        players: 0,
-        id: 'Team A',
-        serving: false,
-        winner: false
-    }, {
-        score: 0,
-        players: 0,
-        id: 'Team B',
-        serving: false,
-        winner: false
-    }];
+    export class Team {
+        public score: int = 0;
+        public players: int = 0;
+        public id: string = '';
+        public serving: boolean = false;
+        public winner: boolean = false;
 
-    constructor() {
-        this.reset();
-    };
-
-    public updateTeam(idx, newTeamVal) {
-        this.teams[idx].score = newTeamVal.score;
-        this.teams[idx].players = newTeamVal.players;
-        this.teams[idx].id = newTeamVal.id;
-        this.teams[idx].serving = newTeamVal.serving;
-        this.teams[idx].winner = newTeamVal.winner;
-    }
-
-    public gameOver() {
-        return this.teams[0].winner || this.teams[1].winner;
-    }
-
-    public totalScore() {
-        return this.teams[0].score + this.teams[1].score;
-    }
-
-    public diffScore() {
-        return Math.abs(this.teams[0].score - this.teams[1].score);
-    }
-
-    public maxScore() {
-        return Math.max(this.teams[0].score, this.teams[1].score);
-    }
-
-    public updateServing() {
-        if (this.teams[0].score >= 10 && this.teams[1].score >= 10)
-        {
-            var teamAServes = (this.totalScore() & 1) == 0;
-        } else {
-            var teamAServes = (this.totalScore() & 2) == 0;
+        constructor(id: string) {
+            this.id = id;
         }
-
-        this.teams[0].serving = teamAServes;
-        this.teams[1].serving = !teamAServes;
     }
 
-    public reset() {
-        Array.prototype.forEach.call(this.teams, function (t, idx) {
-            t.score = 0;
-            t.serving = false;
-            t.winner = false;
-        });
+    export class Game {
+        private winCondition: int = 11;
+        private winDelta: int = 2;
 
-        this.updateServing();
-    }
+        public teams: Team[] = [
+            new Team('Team A'),
+            new Team('Team B')
+        ];
 
-    public scorePoint(teamIdx, numPoints) {
-        if (this.gameOver())
-        {
-            return;
-        }
-
-        this.teams[teamIdx].score += numPoints;
-
-        if ((this.maxScore() >= this.winCondition) && (this.diffScore() >= this.winDelta))
-        {
-            this.teams[teamIdx].winner = true;
-            return;
-        }
-
-        this.updateServing();
-    }
-
-    public handleButtonPress(btn_id, duration) {
-        if (duration < 50) {
-            return;
-        }
-
-        if (btn_id == "reset") {
+        constructor() {
             this.reset();
-            return;
         }
 
-        let points = 1;
-        if (duration > 500) {
-            points = -1;
+        public updateTeam(idx: int, newTeamVal: Team) {
+            this.teams[idx].score = newTeamVal.score;
+            this.teams[idx].players = newTeamVal.players;
+            this.teams[idx].id = newTeamVal.id;
+            this.teams[idx].serving = newTeamVal.serving;
+            this.teams[idx].winner = newTeamVal.winner;
         }
 
-        this.scorePoint(btn_id == "a" ? 0 : 1, points);
+        public gameOver(): boolean {
+            return this.teams[0].winner || this.teams[1].winner;
+        }
+
+        public totalScore(): int {
+            return this.teams[0].score + this.teams[1].score;
+        }
+
+        public diffScore(): int {
+            return Math.abs(this.teams[0].score - this.teams[1].score);
+        }
+
+        public maxScore(): int {
+            return Math.max(this.teams[0].score, this.teams[1].score);
+        }
+
+        public updateServing() {
+            if (this.teams[0].score >= 10 && this.teams[1].score >= 10) {
+                var teamAServes = (this.totalScore() & 1) == 0;
+            } else {
+                var teamAServes = (this.totalScore() & 2) == 0;
+            }
+
+            this.teams[0].serving = teamAServes;
+            this.teams[1].serving = !teamAServes;
+        }
+
+        public reset() {
+            Array.prototype.forEach.call(this.teams, function (t, idx) {
+                t.score = 0;
+                t.serving = false;
+                t.winner = false;
+            });
+
+            this.updateServing();
+        }
+
+        public scorePoint(teamIdx: int, numPoints: int) {
+            if (this.gameOver()) {
+                return;
+            }
+
+            this.teams[teamIdx].score += numPoints;
+
+            if ((this.maxScore() >= this.winCondition) && (this.diffScore() >= this.winDelta)) {
+                this.teams[teamIdx].winner = true;
+                return;
+            }
+
+            this.updateServing();
+        }
+
+        public handleButtonPress(btn_id: string, duration: int) {
+            if (duration < 50) {
+                return;
+            }
+
+            if (btn_id == "reset") {
+                this.reset();
+                return;
+            }
+
+            let points = 1;
+            if (duration > 500) {
+                points = -1;
+            }
+
+            this.scorePoint(btn_id == "a" ? 0 : 1, points);
+        }
     }
 }
 

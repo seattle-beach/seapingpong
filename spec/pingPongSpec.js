@@ -10,25 +10,25 @@ function test_bServes(pp) {
 describe("The PingPong app", function() {
     var PingPong = require('../public/game');
     it("should initialize to a blank game", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
         expect(pp.teams.length).toBe(2);
         expect(pp.totalScore()).toBe(0);
     });
 
     it("team a should start serving", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
         test_aServes(pp);
     });
 
     it("should declare win condition points the winner", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
         pp.scorePoint(0, pp.winCondition);
         expect(pp.teams[0].winner).toBe(true);
         expect(pp.teams[1].winner).toBe(false);
     });
 
     it("should not declare win condition if not exceeding the delta", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
         pp.scorePoint(0, pp.winCondition - 1);
         pp.scorePoint(1, pp.winCondition - 1);
 
@@ -47,7 +47,7 @@ describe("The PingPong app", function() {
     });
 
     it("should not increase the score after a winner", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
 
         pp.scorePoint(0, pp.winCondition);
         expect(pp.teams[0].winner).toBe(true);
@@ -61,7 +61,7 @@ describe("The PingPong app", function() {
     });
 
     it("should alternate who serves every 2 points", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
 
         test_aServes(pp);
         pp.scorePoint(0, 1);
@@ -113,7 +113,7 @@ describe("The PingPong app", function() {
     });
 
     it("should implement deuce rules", function() {
-        var pp = new PingPong();
+        var pp = new PingPong.Game();
         // 10 : 10
         pp.scorePoint(0, 10);
         pp.scorePoint(1, 10);

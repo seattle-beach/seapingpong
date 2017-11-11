@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
 var PingPong = require('./public/game');
-var pp = new PingPong();
+var pp = new PingPong.Game();
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
