@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Seattle Ping Pong</title>
-    <script src="https://vuejs.org/js/vue.js" type="application/javascript"></script>
+    <script src="/vue.js" type="application/javascript"></script>
     <script src="socket.io/socket.io.js"></script>
     <link rel="stylesheet" type="text/css" href="/main.css" />
-    <script src="/game.js" type="application/javascript"></script>
+    <script> var exports = {}; </script>
+    <script src="game.js" type="application/javascript"></script>
 </head>
 <body>
     <div id="game-container">
@@ -32,7 +33,7 @@
     </div>
 
     <script type="application/javascript">
-        let pp = new PingPong.Game();
+        var pp = new PingPong.Game();
 
         new Vue({
             el: '#team-a',
@@ -43,7 +44,7 @@
             data: pp.teams[1]
         });
 
-        let socket = io();
+        var socket = io();
         socket.on('button press', function(ppUpdated) {
             pp.updateTeam(0, ppUpdated.teams[0]);
             pp.updateTeam(1, ppUpdated.teams[1]);

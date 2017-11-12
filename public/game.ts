@@ -125,4 +125,4 @@ export module PingPong {
 }
 
 // Export node module.
-module.exports = PingPong;
+export = PingPong;
